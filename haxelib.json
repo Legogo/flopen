@@ -1,0 +1,13 @@
+{
+  "name": "openfl-tools",
+  "url": "https://github.com/Legogo/flopen.git",
+  "license": "MIT",
+  "tags": [],
+  "description": "Various tools for open-fl",
+  "version": "0.0.1",
+  "releasenote": "Initial commit",
+  "contributors": ["André Berlemont"],
+  "dependencies": {
+      
+  }
+}
