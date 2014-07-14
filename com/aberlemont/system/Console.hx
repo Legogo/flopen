@@ -18,6 +18,7 @@ class Console extends Sprite
   private var tf_system:TextField;
   private var tf_console:TextField;
   
+  private var lines:Array<String> = new Array<String>();
   private var fps:FPS;
   
   public function new() 
@@ -31,13 +32,16 @@ class Console extends Sprite
     setupTextfield(tf_system);
     setupTextfield(tf_console);
     
-    Lib.current.addEventListener(KeyboardEvent.KEY_UP, kRelease);
-    Lib.current.addChild(this);
-    
     fps = new FPS();
-    fps.x = Lib.current.stage.stageWidth - 50;
     addChild(fps);
     
+    addEventListener(Event.ADDED_TO_STAGE, added);
+    if(stage == null) Lib.current.addChild(this);
+  }
+  
+  private function added(e:Event):Void {
+    removeEventListener(Event.ADDED_TO_STAGE, added);
+    stage.addEventListener(KeyboardEvent.KEY_UP, kRelease);
     toggle();
   }
   
@@ -56,24 +60,72 @@ class Console extends Sprite
   }
   
   private function toggle():Void {
+    visible = !visible;
+    if (!visible) return;
+    
+    var w:Int = Math.floor(Lib.current.stage.stageWidth);
+    var h:Int = Math.floor(Lib.current.stage.stageHeight);
+    w -= 30;
+    h -= 20;
+    
     //update position and size if screen changed size
     tf_console.x = 10;
-    tf_console.y = 10;
-    tf_console.width = Lib.current.stage.stageWidth * 0.75;
-    tf_system.height = tf_console.height = Lib.current.stage.stageHeight * 0.9;
+    tf_console.width = w * 0.7;
+    tf_system.width = w * 0.3;
+    tf_system.x = tf_console.x + tf_console.width + 10;
+    tf_system.height = tf_console.height = h;
+    tf_system.y = tf_console.y = 10;
     
-    tf_system.x = tf_console.x + tf_console.width + 2;
-    tf_system.y = 25;
-    tf_system.width = Lib.current.stage.stageHeight * 0.25;
+    trace(w + "," + h+"  "+tf_console.width+","+tf_console.height);
+    trace(width + "," + height);
+    if (fps != null) {
+      fps.x = Lib.current.stage.stageWidth - 50;
+      fps.y = Lib.current.stage.stageHeight - 25;
+    }
     
-    visible = !visible;
+    graphics.clear();
+    graphics.beginFill(0xFFFFFF, 0.8);
+    //graphics.drawRect(0,0, width, height);
+    graphics.drawRect(tf_console.x, tf_console.y, tf_console.width, tf_console.height);
+    graphics.drawRect(tf_system.x, tf_system.y, tf_system.width, tf_system.height);
+    graphics.endFill();
+    
+    updateText();
+  }
+  
+  private function updateText():Void {
+    var start:Int = lines.length - 35;
+    if (start < 0) start = 0;
+    var end:Int = lines.length;
+    
+    var content:String = "";
+    for (i in start...end) {
+      content += lines[i];
+    }
+    tf_console.text = content;
+  }
+  
+  private function addLine(context:String, content:String):Void {
+    lines.push("\n(" + context + ") " + content);
+    updateText();
+  }
+  
+  static public function get():Console {
+    if (console == null) {
+      console = new Console();
+      Lib.current.addChild(console);
+    }
+    return console;
   }
   
   static public function setSystemInfo(content:String):Void {
+    if (console == null) get();
     console.tf_system.text = content;
   }
   
   static public function log(context:String, content:String):Void {
+    if (console == null) get();
     trace("(" + context + ") " + content);
+    console.addLine(context, content);
   }
 }
