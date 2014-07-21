@@ -1,4 +1,5 @@
 package com.aberlemont.system;
+
 import flash.display.Sprite;
 import flash.events.Event;
 import flash.Lib;
@@ -25,7 +26,6 @@ class Console extends Sprite
   {
     super();
     console = this;
-    
     tf_system = new TextField();
     tf_console = new TextField();
     

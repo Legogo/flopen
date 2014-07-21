@@ -1,5 +1,5 @@
 package com.aberlemont.gui;
-import com.aberlemont.graphics.GraphicObject;
+import com.aberlemont.display.GraphicObject;
 import com.aberlemont.system.Console;
 import flash.display.Sprite;
 import haxe.Constraints.Function;
@@ -16,6 +16,7 @@ import flash.Lib;
 class DragAndDroppable extends Sprite
 {
   
+  public var cbDrop:DragAndDroppable-> Void;
   private var drop:Bool = false;
   private var offset:Point = new Point();
   
@@ -38,18 +39,20 @@ class DragAndDroppable extends Sprite
     offset.y = clickY - global.y;
     
     stage.addEventListener(Event.ENTER_FRAME, mDrag);
-    addEventListener(MouseEvent.MOUSE_UP, mUp);
+    stage.addEventListener(MouseEvent.MOUSE_UP, mUp);
+    
+    parent.addChild(this); // in front
+    event_startDrag();
   }
+  
+  public function event_startDrag():Void {}
   
   private function mUp(e:MouseEvent):Void {
     stage.removeEventListener(Event.ENTER_FRAME, mDrag);
-    removeEventListener(MouseEvent.MOUSE_UP, mUp);
+    stage.removeEventListener(MouseEvent.MOUSE_UP, mUp);
     
     drop = true;
-    onDrop();
-  }
-  
-  private function onDrop():Void {
+    cbDrop(this);
   }
   
   public function isDropped():Bool { return drop; }

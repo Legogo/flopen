@@ -13,33 +13,51 @@ import openfl.geom.Rectangle;
 class GraphicObject extends Sprite
 {
   var sheet:Bitmap;
-  var frame:Bitmap;
+  var canvas:Bitmap;
+  
+	var moveSpeed:Int = 100;
+	
+	var frameTimeSpeed:Float = 0.15;
+	var frameTime:Float = 0;
+	
+  var pt:Point = new Point();
+	var rect:Rectangle = new Rectangle(0, 0, 84, 84);
   
   public function new(path:String) 
   {
     super();
     sheet = GraphicTools.getAsset(path);
-    frame = new Bitmap(new BitmapData(1, 1, true, 0));
-    setFrameBySize(0, Math.floor(sheet.width), Math.floor(sheet.height));
+    if (sheet == null) {
+      trace("GraphicObject :: no sheet found for path : " + path);
+      return;
+    }
     
-    addChild(frame);
+		setSize(Math.floor(sheet.width), Math.floor(sheet.height)).setFrame(0, 0);
+    addChild(canvas);
   }
   
-  public function setFrameBySize(idx:Int, width:Int, height:Int):Void {
-    //trace(width, height);
-    frame.bitmapData = new BitmapData(width, height, true, 0);
+  public function setSize(width:Int, height:Int):GraphicObject {
+    rect.width = width;
+    rect.height = height;
+    if (canvas == null) {
+      canvas = new Bitmap(new BitmapData(width, height, true, 0));
+    }else {
+      canvas.bitmapData = new BitmapData(width, height, true, 0);
+    }
     
-    frame.bitmapData.copyPixels(
-      sheet.bitmapData,
-      new Rectangle(idx * width, 0, width, height),
-      new Point(),
-      sheet.bitmapData,
-      new Point(),
-      true);
+    draw();
+    return this;
   }
   
-  public function setFrame(idx:Int):Void {
-    setFrameBySize(idx, Math.floor(frame.width), Math.floor(frame.height));
-  }
-  
+	public function setFrame(row:Int, col:Int):Void {
+		rect.x = col * rect.width;
+		rect.y = row * rect.height;
+		frameTime = frameTimeSpeed;
+		draw();
+	}
+	
+	private function draw():Void {
+		canvas.bitmapData.copyPixels(sheet.bitmapData, rect, pt, sheet.bitmapData, pt);
+	}
+	
 }

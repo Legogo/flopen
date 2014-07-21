@@ -1,4 +1,5 @@
 package com.aberlemont;
+import openfl.text.TextField;
 
 /**
  * ...
@@ -12,5 +13,12 @@ class Tools
   
   static public function rangeInt(x:Int, y:Int):Int {
     return Math.floor(range(cast(x, Int), cast(y, Int)));
+  }
+  
+  static public function getStandardTextfield():TextField {
+    var tf:TextField = new TextField();
+    tf.selectable = false;
+    tf.mouseEnabled = false;
+    return tf;
   }
 }

@@ -21,7 +21,7 @@ class InteractiveZone extends Sprite
     var alpha:Float = 0;
     
     #if debug
-    alpha = 0.5;
+    //alpha = 0.5;
     #end
     
     graphics.beginFill(0xFF00FF, alpha);

@@ -11,12 +11,17 @@ import openfl.Assets;
 class GraphicTools
 {
 
-  static public function getAsset(path:String):Bitmap
+  static public function getStageWidth():Int { return Lib.current.stage.stageWidth; }
+  static public function getStageHeight():Int { return Lib.current.stage.stageHeight; }
+  
+	static public function getAsset(path:String):Bitmap {
+		return new Bitmap(Assets.getBitmapData("assets/"+path));
+	}
+	
+  static public function getAssetPng(path:String):Bitmap
   {
     return new Bitmap(Assets.getBitmapData("assets/"+path+".png"));
   }
-  static public function getStageWidth():Int { return Lib.current.stage.stageWidth; }
-  static public function getStageHeight():Int { return Lib.current.stage.stageHeight; }
   
   static public function display_stageInfo():Void {
     trace("stage " + getStageWidth() + ", " + getStageHeight());
