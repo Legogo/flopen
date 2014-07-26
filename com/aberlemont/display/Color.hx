@@ -27,7 +27,10 @@ class Color
 	public function getColor():UInt {
 		return num;
 	}
-	
+
+	public function getAlpha():Int {
+		return getComponentValue(num, "a");
+	}
 	public function setAlpha(v:Int):Void {
 		num = rgbaToUint(getComponentValue(num, "r"), getComponentValue(num, "g"), getComponentValue(num, "b"), v);
 	}
