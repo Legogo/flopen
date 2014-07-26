@@ -1,5 +1,6 @@
 package com.aberlemont.system;
 
+import com.aberlemont.display.GraphicTools;
 import openfl.display.Sprite;
 import openfl.events.Event;
 import openfl.Lib;
@@ -36,12 +37,15 @@ class Console extends Sprite
     addChild(fps);
     
     addEventListener(Event.ADDED_TO_STAGE, added);
-    if(stage == null) Lib.current.addChild(this);
   }
   
   private function added(e:Event):Void {
     removeEventListener(Event.ADDED_TO_STAGE, added);
+		
+		#if debug
     stage.addEventListener(KeyboardEvent.KEY_UP, kRelease);
+		#end
+		
     toggle();
   }
   
@@ -63,6 +67,9 @@ class Console extends Sprite
     visible = !visible;
     if (!visible) return;
     
+		//on top
+		if(stage != null) Lib.current.addChild(this);
+		
     var w:Int = Math.floor(Lib.current.stage.stageWidth);
     var h:Int = Math.floor(Lib.current.stage.stageHeight);
     w -= 30;
@@ -79,8 +86,8 @@ class Console extends Sprite
     //trace(w + "," + h+"  "+tf_console.width+","+tf_console.height);
     //trace(width + "," + height);
     if (fps != null) {
-      fps.x = Lib.current.stage.stageWidth - 50;
-      fps.y = Lib.current.stage.stageHeight - 25;
+      fps.x = Lib.current.stage.stageWidth - 60;
+      fps.y = Lib.current.stage.stageHeight - 30;
     }
     
     graphics.clear();
@@ -90,7 +97,8 @@ class Console extends Sprite
     graphics.drawRect(tf_system.x, tf_system.y, tf_system.width, tf_system.height);
     graphics.endFill();
     
-    updateText();
+		updateText();
+		//addEventListener(Event.ENTER_FRAME, updateText);
   }
   
   private function updateText():Void {

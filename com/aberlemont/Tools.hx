@@ -42,6 +42,17 @@ class Tools
     return Math.floor(range(cast(x, Int), cast(y, Int)));
   }
 	
+	static public function moveToward(current:Point, target:Point, step:Float):Point {
+		var dir:Float = Tools.sign(target.x - current.x);
+		current.x += dir * step;
+		if (Math.abs(target.x - current.x) < step) current.x = target.x;
+		
+		dir = Tools.sign(target.y - current.y);
+		current.y += dir * step;
+		if (Math.abs(target.y - current.y) < step) current.y = target.y;
+		return current;
+	}
+	
 	// VECTOR
 	
 	static public function distance(xa:Float, ya:Float, xb:Float, yb:Float):Float {

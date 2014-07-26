@@ -60,21 +60,11 @@ class InputSwip extends Sprite
     var gap:Int = 30;
 
     var dist:Float = Math.abs(touchX - touchXEnd);
-    //trace("x = "+dist);
-    
     //swip not big enought
     if (dist < gap) {
       trace("swip's too short (X)");
       return;
     }
-    
-    /*
-    //check Y distance
-    gap = 30;
-    dist = Math.abs(touchY - touchYEnd);
-    trace("y = "+dist);
-    if (dist > gap) { trace("swip's too far (Y)");return; }
-    */
     
     var dir:Int = (touchXEnd > touchX) ? 1 : -1;
     event_slide(dir);

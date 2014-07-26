@@ -22,7 +22,7 @@ class GraphicObject extends Sprite
 	
   var pt:Point = new Point();
 	var rect:Rectangle = new Rectangle(0, 0, 84, 84);
-  
+	
   public function new(path:String) 
   {
     super();
@@ -60,4 +60,16 @@ class GraphicObject extends Sprite
 		canvas.bitmapData.copyPixels(sheet.bitmapData, rect, pt, sheet.bitmapData, pt);
 	}
 	
+	public function getSymbol():BitmapData {
+		return canvas.bitmapData.clone();
+	}
+	
+	public function getWidth():Int {
+		return Math.floor(canvas.width);
+	}
+	public function getHeight():Int {
+		return Math.floor(canvas.height);
+	}
+	
+	public function setPosition(x:Float, y:Float):Void { this.x = x; this.y = y; }
 }
