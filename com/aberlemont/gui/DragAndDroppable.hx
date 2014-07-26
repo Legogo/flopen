@@ -1,13 +1,13 @@
 package com.aberlemont.gui;
 import com.aberlemont.display.GraphicObject;
 import com.aberlemont.system.Console;
-import flash.display.Sprite;
+import openfl.display.Sprite;
 import haxe.Constraints.Function;
 import openfl.geom.Point;
 
-import flash.events.Event;
-import flash.events.MouseEvent;
-import flash.Lib;
+import openfl.events.Event;
+import openfl.events.MouseEvent;
+import openfl.Lib;
 
 /**
  * ...

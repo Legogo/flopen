@@ -1,6 +1,6 @@
 package com.aberlemont.gui;
-import flash.display.Sprite;
-import flash.events.MouseEvent;
+import openfl.display.Sprite;
+import openfl.events.MouseEvent;
 import haxe.Constraints.Function;
 import openfl.utils.Object;
 

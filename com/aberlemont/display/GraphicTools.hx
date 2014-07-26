@@ -1,7 +1,7 @@
 package com.aberlemont.display;
 
-import flash.Lib;
-import flash.display.Bitmap;
+import openfl.Lib;
+import openfl.display.Bitmap;
 import openfl.Assets;
 
 /**

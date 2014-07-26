@@ -1,7 +1,7 @@
 package com.aberlemont.input;
-import flash.display.Sprite;
-import flash.events.TouchEvent;
-import flash.Lib;
+import openfl.display.Sprite;
+import openfl.events.TouchEvent;
+import openfl.Lib;
 
 /**
  * ...

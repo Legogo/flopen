@@ -1,8 +1,8 @@
 package com.aberlemont.system;
 
-import flash.display.Sprite;
-import flash.events.Event;
-import flash.Lib;
+import openfl.display.Sprite;
+import openfl.events.Event;
+import openfl.Lib;
 import openfl.display.Stage;
 
 /**

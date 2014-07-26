@@ -1,10 +1,10 @@
 package com.aberlemont.input;
 
-import flash.display.Sprite;
-import flash.events.Event;
-import flash.events.TouchEvent;
-import flash.events.MouseEvent;
-import flash.geom.Point;
+import openfl.display.Sprite;
+import openfl.events.Event;
+import openfl.events.TouchEvent;
+import openfl.events.MouseEvent;
+import openfl.geom.Point;
 
 /**
  * ...

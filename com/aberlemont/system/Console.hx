@@ -1,10 +1,10 @@
 package com.aberlemont.system;
 
-import flash.display.Sprite;
-import flash.events.Event;
-import flash.Lib;
-import flash.events.KeyboardEvent;
-import flash.ui.Keyboard;
+import openfl.display.Sprite;
+import openfl.events.Event;
+import openfl.Lib;
+import openfl.events.KeyboardEvent;
+import openfl.ui.Keyboard;
 import openfl.geom.Point;
 import openfl.text.TextField;
 import openfl.display.FPS;
@@ -76,8 +76,8 @@ class Console extends Sprite
     tf_system.height = tf_console.height = h;
     tf_system.y = tf_console.y = 10;
     
-    trace(w + "," + h+"  "+tf_console.width+","+tf_console.height);
-    trace(width + "," + height);
+    //trace(w + "," + h+"  "+tf_console.width+","+tf_console.height);
+    //trace(width + "," + height);
     if (fps != null) {
       fps.x = Lib.current.stage.stageWidth - 50;
       fps.y = Lib.current.stage.stageHeight - 25;
