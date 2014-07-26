@@ -55,17 +55,15 @@ class Color
 	}
 
 	static public function changeAlpha(target:BitmapData, alpha:UInt = 255):Void {
-					var ct:ColorTransform = new ColorTransform();
-					ct.alphaMultiplier = alpha;
-					target.colorTransform(new Rectangle(0, 0, target.width, target.height), ct);
-			}
+		var ct:ColorTransform = new ColorTransform();
+		ct.alphaMultiplier = alpha;
+		target.colorTransform(new Rectangle(0, 0, target.width, target.height), ct);
+	}
 
-	static public function setColor(target:BitmapData, color:UInt, alpha:UInt = 255):Void {
-					var ct:ColorTransform = new ColorTransform();
-					ct.color = color;
-					ct.alphaMultiplier = alpha;
-					target.colorTransform(new Rectangle(0, 0, target.width, target.height), ct);
-			}
+	static public function setBitmapDataColor(target:BitmapData, color:UInt):Void {
+		target.colorTransform(target.rect, new ColorTransform((color >> 16 & 0x0000FF) / 255, (color >> 8 & 0x0000FF) / 255, (color & 0x0000FF) / 255));
+		//target.colorTransform(target.rect, ct);
+	}
 
 
 	static public function drawCross(length:Float = 10, tickness:Float = 1, color:UInt = 0xFF0000):Sprite {
