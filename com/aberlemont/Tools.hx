@@ -43,13 +43,17 @@ class Tools
   }
 	
 	static public function moveToward(current:Point, target:Point, step:Float):Point {
-		var dir:Float = Tools.sign(target.x - current.x);
-		current.x += dir * step;
-		if (Math.abs(target.x - current.x) < step) current.x = target.x;
+		var diff:Point = new Point(target.x - current.x, target.y - current.y);
 		
-		dir = Tools.sign(target.y - current.y);
-		current.y += dir * step;
-		if (Math.abs(target.y - current.y) < step) current.y = target.y;
+		if (diff.length < step) {
+			current.x = target.x;
+			current.y = target.y;
+		}else {
+			diff = Tools.normalize(diff);
+			current.x += diff.x * step;
+			current.y += diff.y * step;
+		}
+		
 		return current;
 	}
 	

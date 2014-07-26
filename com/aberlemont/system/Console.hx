@@ -16,17 +16,20 @@ import openfl.display.FPS;
  */
 class Console extends Sprite
 {
-  static public var console;
+  static public var console:Console;
   private var tf_system:TextField;
   private var tf_console:TextField;
   
   private var lines:Array<String> = new Array<String>();
   private var fps:FPS;
   
+	public var cb_onOpen:Array<Void->Void> = new Array<Void->Void>();
+
   public function new() 
   {
     super();
     console = this;
+		
     tf_system = new TextField();
     tf_console = new TextField();
     
@@ -46,7 +49,7 @@ class Console extends Sprite
     stage.addEventListener(KeyboardEvent.KEY_UP, kRelease);
 		#end
 		
-    toggle();
+    toggle(); // hide at start
   }
   
   private function setupTextfield(tf:TextField):Void {
@@ -67,6 +70,10 @@ class Console extends Sprite
     visible = !visible;
     if (!visible) return;
     
+		for (i in 0...cb_onOpen.length) {
+			cb_onOpen[i]();
+		}
+		
 		//on top
 		if(stage != null) Lib.current.addChild(this);
 		
@@ -94,7 +101,7 @@ class Console extends Sprite
     graphics.beginFill(0xFFFFFF, 0.8);
     //graphics.drawRect(0,0, width, height);
     graphics.drawRect(tf_console.x, tf_console.y, tf_console.width, tf_console.height);
-    graphics.drawRect(tf_system.x, tf_system.y, tf_system.width, tf_system.height);
+    graphics.drawRect(tf_system.x, tf_system.y, tf_system.width, tf_system.height); 
     graphics.endFill();
     
 		updateText();

@@ -23,7 +23,11 @@ class GraphicObject extends Sprite
   var pt:Point = new Point();
 	var rect:Rectangle = new Rectangle(0, 0, 84, 84);
 	
-  public function new(path:String) 
+	#if debug
+	var debug:Sprite = new Sprite();
+	#end
+	
+	public function new(path:String) 
   {
     super();
     sheet = GraphicTools.getAsset(path);
