@@ -24,8 +24,11 @@ class GraphicObject extends Sprite
 	var frameTime:Float = 0;
 	
 	var position:Point = new Point();
-  var pt:Point = new Point();
-	var rect:Rectangle = new Rectangle(0, 0, 84, 84);
+	
+	var bbox:Rectangle = new Rectangle();
+	
+  var draw_pt:Point = new Point();
+	var draw_rect:Rectangle = new Rectangle(0, 0, 84, 84);
 	
 	#if debug
 	public var debug:Sprite = new Sprite(); // you need to add debug where you want it
@@ -64,8 +67,8 @@ class GraphicObject extends Sprite
 	}
   
   public function setSize(width:Int = 1, height:Int = 1):GraphicObject {
-    rect.width = width;
-    rect.height = height;
+    draw_rect.width = width;
+    draw_rect.height = height;
     if (canvas == null) {
       canvas = new Bitmap(new BitmapData(width, height, true, 0));
     }else {
@@ -82,15 +85,18 @@ class GraphicObject extends Sprite
 	}
 	
 	public function setFrame(row:Int, col:Int):Void {
-		rect.x = col * rect.width;
-		rect.y = row * rect.height;
+		draw_rect.x = col * draw_rect.width;
+		draw_rect.y = row * draw_rect.height;
 		frameTime = frameTimeSpeed;
 		
 		draw();
 	}
 	
+	public function getRow():Int { return Math.floor(draw_rect.y / draw_rect.height); }
+	public function getCol():Int { return Math.floor(draw_rect.x / draw_rect.width); }
+	
 	private function draw():Void {
-		canvas.bitmapData.copyPixels(sheet, rect, pt, sheet, pt);
+		canvas.bitmapData.copyPixels(sheet, draw_rect, draw_pt, sheet, draw_pt);
 	}
 	
 	public function getSheet():BitmapData {
@@ -104,6 +110,9 @@ class GraphicObject extends Sprite
 		return new Point(x - (getWidth() * 0.5), y - (getHeight() * 0.5));
 	}
 	
+	public function getBbox():Rectangle {
+		return bbox;
+	}
 	public function getWidth():Int {
 		return Math.floor(canvas.width);
 	}
