@@ -57,7 +57,7 @@ class InputTouch
 		//reset
 		
 		if (state == TouchEvent.TOUCH_BEGIN) {
-			movedThreshold = 10;
+			movedThreshold = 5;
 			moved = false;
 		}else if (state == TouchEvent.TOUCH_END) {
 			moveGap.x = moveGap.y = moveDelta.x = moveDelta.y = 0;

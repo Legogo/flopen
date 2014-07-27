@@ -38,4 +38,41 @@ class GraphicTools
 		bmp.copyPixels(sheet, size, pos, sheet, new Point());
 		return bmp;
 	}
+	
+	/* return rectangles of given color in a bitmap (original bitmapdata is override with debug color) */
+	static public function solveShapesBbox(shape:BitmapData, seekColor:Int):Array<Rectangle> {
+		var rect:Rectangle = null;
+		var rs:Array<Rectangle> = new Array<Rectangle>();
+		
+		for (i in 0...shape.width) {
+			for (j in 0...shape.height) {
+				
+				var c:Color = new Color(shape.getPixel32(i, j));
+				//trace(i + "," + j + " " + seekColor +" || " + c + ", " + c.num);
+				
+				if (shape.getPixel32(i, j) == seekColor) {
+					var progressx:Int = i;
+					var progressy:Int = j;
+					
+					while (shape.getPixel32(progressx, j) == seekColor)	progressx++;
+					while (shape.getPixel32(i, progressy) == seekColor)	progressy++;
+					
+					rect = new Rectangle(i, j, progressx - i, progressy - j);
+					
+					var doublon:Bool = false;
+					for (k in 0...rs.length) {
+						if (rs[k].containsRect(rect)) doublon = true;
+					}
+					if (!doublon) {
+						rs.push(rect);
+						shape.fillRect(rect, 0xFFFF00FF); // remove
+					}
+					
+				}
+				
+			}
+		}
+		
+		return rs;
+	}
 }

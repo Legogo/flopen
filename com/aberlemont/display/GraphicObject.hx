@@ -5,6 +5,7 @@ import openfl.display.Sprite;
 import openfl.display.Bitmap;
 import openfl.geom.Point;
 import openfl.geom.Rectangle;
+import openfl.text.TextField;
 
 /**
  * ...
@@ -14,7 +15,7 @@ class GraphicObject extends Sprite
 {
   var anim:GraphicAnim;
 	
-	var sheet:Bitmap;
+	var sheet:BitmapData;
   var canvas:Bitmap;
   
 	var moveSpeed:Int = 100;
@@ -26,14 +27,16 @@ class GraphicObject extends Sprite
 	var rect:Rectangle = new Rectangle(0, 0, 84, 84);
 	
 	#if debug
-	var debug:Sprite = new Sprite();
+	var debug:Sprite = new Sprite(); // you need to add debug where you want it
+	var debugTf:TextField = Tools.getStandardTextfield();
 	#end
 	
 	public function new(path:String) 
   {
     super();
+		
 		if (path.length > 0) {
-			sheet = GraphicTools.getAsset(path);
+			sheet = GraphicTools.getAssetPngData(path);
 			if (sheet == null) {
 				trace("GraphicObject :: no sheet found for path : " + path);
 				return;
@@ -45,6 +48,10 @@ class GraphicObject extends Sprite
 		}
     
     addChild(canvas);
+		
+		#if debug
+		debug.addChild(debugTf);
+		#end
   }
 	
 	public function addAdnim():Void {
@@ -77,14 +84,18 @@ class GraphicObject extends Sprite
 	}
 	
 	private function draw():Void {
-		canvas.bitmapData.copyPixels(sheet.bitmapData, rect, pt, sheet.bitmapData, pt);
+		canvas.bitmapData.copyPixels(sheet, rect, pt, sheet, pt);
 	}
 	
 	public function getSheet():BitmapData {
-		return sheet.bitmapData;
+		return sheet;
 	}
 	public function getSymbol():BitmapData {
 		return canvas.bitmapData.clone();
+	}
+	
+	public function getTopLeft():Point {
+		return new Point(x - (getWidth() * 0.5), y - (getHeight() * 0.5));
 	}
 	
 	public function getWidth():Int {
@@ -93,6 +104,8 @@ class GraphicObject extends Sprite
 	public function getHeight():Int {
 		return Math.floor(canvas.height);
 	}
+	
+	public function toStringDebug():String { return name; }
 	
 	public function setPosition(x:Float, y:Float):Void { this.x = x; this.y = y; }
 }

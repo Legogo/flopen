@@ -79,7 +79,7 @@ class Tools
 		if (length != 0)	return new Point(pt.x / length, pt.y / length);
 		else return new Point();
 	}
-
+	
 	static public function destinationPoint(origin:Point, dir:Point, lenght:Float):Point {
 		return new Point((origin.x + dir.x * lenght), (origin.y + dir.y * lenght));
 	}
@@ -90,6 +90,8 @@ class Tools
     var tf:TextField = new TextField();
     tf.selectable = false;
     tf.mouseEnabled = false;
+		tf.width = 200;
+		tf.height = 100;
     return tf;
   }
 }
