@@ -12,7 +12,9 @@ import openfl.geom.Rectangle;
  */
 class GraphicObject extends Sprite
 {
-  var sheet:Bitmap;
+  var anim:GraphicAnim;
+	
+	var sheet:Bitmap;
   var canvas:Bitmap;
   
 	var moveSpeed:Int = 100;
@@ -30,17 +32,30 @@ class GraphicObject extends Sprite
 	public function new(path:String) 
   {
     super();
-    sheet = GraphicTools.getAsset(path);
-    if (sheet == null) {
-      trace("GraphicObject :: no sheet found for path : " + path);
-      return;
-    }
+		if (path.length > 0) {
+			sheet = GraphicTools.getAsset(path);
+			if (sheet == null) {
+				trace("GraphicObject :: no sheet found for path : " + path);
+				return;
+			}
+			
+			setSize(Math.floor(sheet.width), Math.floor(sheet.height)).setFrame(0, 0);
+		}else {
+			setSize();
+		}
     
-		setSize(Math.floor(sheet.width), Math.floor(sheet.height)).setFrame(0, 0);
     addChild(canvas);
   }
+	
+	public function addAdnim():Void {
+		anim = new GraphicAnim(this);
+	}
+	
+	public function update():Void {
+		if (anim != null)	anim.update();
+	}
   
-  public function setSize(width:Int, height:Int):GraphicObject {
+  public function setSize(width:Int = 1, height:Int = 1):GraphicObject {
     rect.width = width;
     rect.height = height;
     if (canvas == null) {
@@ -49,7 +64,7 @@ class GraphicObject extends Sprite
       canvas.bitmapData = new BitmapData(width, height, true, 0);
     }
     
-    draw();
+    if(sheet != null)	draw();
     return this;
   }
   
@@ -57,6 +72,7 @@ class GraphicObject extends Sprite
 		rect.x = col * rect.width;
 		rect.y = row * rect.height;
 		frameTime = frameTimeSpeed;
+		
 		draw();
 	}
 	
@@ -64,6 +80,9 @@ class GraphicObject extends Sprite
 		canvas.bitmapData.copyPixels(sheet.bitmapData, rect, pt, sheet.bitmapData, pt);
 	}
 	
+	public function getSheet():BitmapData {
+		return sheet.bitmapData;
+	}
 	public function getSymbol():BitmapData {
 		return canvas.bitmapData.clone();
 	}

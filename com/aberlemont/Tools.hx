@@ -1,4 +1,5 @@
 package com.aberlemont;
+import flash.utils.CompressionAlgorithm;
 import openfl.geom.Point;
 import openfl.text.TextField;
 
@@ -58,6 +59,13 @@ class Tools
 	}
 	
 	// VECTOR
+	
+	static public function comparePoint(pta:Point, ptb:Point):Bool {
+		if (pta.x == ptb.x) {
+			if (pta.y == ptb.y)	return true;
+		}
+		return false;
+	}
 	
 	static public function distance(xa:Float, ya:Float, xb:Float, yb:Float):Float {
 		return Math.sqrt(Math.pow((xb - xa), 2) + Math.pow((yb - ya), 2));
