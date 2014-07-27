@@ -10,6 +10,7 @@ import openfl.text.TextField;
  */
 class Tools
 {
+	static public var pt:Point = new Point();
 	
 	//NUMBERS
 	public static function threshold(min:Float, max:Float, val:Float):Float {
@@ -45,15 +46,17 @@ class Tools
   }
 	
 	static public function moveToward(current:Point, target:Point, step:Float):Point {
-		var diff:Point = new Point(target.x - current.x, target.y - current.y);
+		//var diff:Point = new Point(target.x - current.x, target.y - current.y);
+		pt.x = target.x - current.x;
+		pt.y = target.y - current.y;
 		
-		if (diff.length < step) {
+		if (pt.length < step) {
 			current.x = target.x;
 			current.y = target.y;
-		}else {
-			diff = Tools.normalize(diff);
-			current.x += diff.x * step;
-			current.y += diff.y * step;
+		}else{
+			pt = Tools.normalize(pt);
+			current.x += pt.x * step;
+			current.y += pt.y * step;
 		}
 		
 		return current;
