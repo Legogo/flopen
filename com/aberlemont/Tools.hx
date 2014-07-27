@@ -80,6 +80,13 @@ class Tools
 		else return new Point();
 	}
 	
+	/* be careful, pta is overrided ! */
+	static public function substractPoint(pta:Point, ptb:Point):Point {
+		pta.x -= ptb.x;
+		pta.y -= ptb.y;
+		return pta;
+	}
+	
 	static public function destinationPoint(origin:Point, dir:Point, lenght:Float):Point {
 		return new Point((origin.x + dir.x * lenght), (origin.y + dir.y * lenght));
 	}

@@ -23,12 +23,13 @@ class GraphicObject extends Sprite
 	var frameTimeSpeed:Float = 0.15;
 	var frameTime:Float = 0;
 	
+	var position:Point = new Point();
   var pt:Point = new Point();
 	var rect:Rectangle = new Rectangle(0, 0, 84, 84);
 	
 	#if debug
-	var debug:Sprite = new Sprite(); // you need to add debug where you want it
-	var debugTf:TextField = Tools.getStandardTextfield();
+	public var debug:Sprite = new Sprite(); // you need to add debug where you want it
+	public var debugTf:TextField = Tools.getStandardTextfield();
 	#end
 	
 	public function new(path:String) 
@@ -107,5 +108,6 @@ class GraphicObject extends Sprite
 	
 	public function toStringDebug():String { return name; }
 	
+	public function getPosition():Point { position.x = x; position.y = y; return position; }
 	public function setPosition(x:Float, y:Float):Void { this.x = x; this.y = y; }
 }

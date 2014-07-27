@@ -23,6 +23,8 @@ class InputTouch
 	public var moveDelta:Point = new Point(); // diff at each frame
 	
 	public var moved:Bool = false; // to know if touch went through move phase
+	
+	var thresholdLimit:Int = 2;
 	public var movedThreshold:Int = -1; // don't use touch until a significant size of movement
 	
 	public function new(id:Int) {
@@ -57,7 +59,7 @@ class InputTouch
 		//reset
 		
 		if (state == TouchEvent.TOUCH_BEGIN) {
-			movedThreshold = 5;
+			movedThreshold = thresholdLimit;
 			moved = false;
 		}else if (state == TouchEvent.TOUCH_END) {
 			moveGap.x = moveGap.y = moveDelta.x = moveDelta.y = 0;
