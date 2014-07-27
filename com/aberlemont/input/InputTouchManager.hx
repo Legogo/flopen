@@ -17,56 +17,62 @@ class InputTouchManager
 {
 	static public var manager:InputTouchManager;
 	var touches:Array<InputTouch> = new Array<InputTouch>();
+	var multiTouchSupported:Bool = false;
 	
-	public var tBegin_cb:InputTouch->Void;
-	public var tEnd_cb:InputTouch->Void;
+	public var tBegin_cb:Array < InputTouch->Void > = new Array < InputTouch->Void >();
+	public var tEnd_cb:Array < InputTouch->Void > = new Array < InputTouch->Void > ();
+	public var tMove_cb:Array < InputTouch->Void > = new Array < InputTouch->Void > ();
 	
   public function new() 
   {
     InputTouchManager.manager = this;
 		
-		var multiTouchSupported:Bool = Multitouch.supportsTouchEvents;
+		multiTouchSupported = Multitouch.supportsTouchEvents;
     if (multiTouchSupported){
       Multitouch.inputMode = MultitouchInputMode.TOUCH_POINT;
       Lib.current.addEventListener(TouchEvent.TOUCH_BEGIN, tBegin);
+			Lib.current.addEventListener(TouchEvent.TOUCH_MOVE, tMove);
       Lib.current.addEventListener(TouchEvent.TOUCH_END, tEnd);
     }else {
 			Console.log("InputManager", "multitouch not supported, using mouse event instead");
       Lib.current.addEventListener(MouseEvent.MOUSE_DOWN, mDown);
+			Lib.current.addEventListener(MouseEvent.MOUSE_MOVE, mMove);
       Lib.current.addEventListener(MouseEvent.MOUSE_UP, mUp);
     }
 		
   }
   
-	public function mDown(e:MouseEvent):Void {
-		touch_begin(0, TouchEvent.TOUCH_BEGIN, e.stageX, e.stageY, e.localX, e.localY);
-	}
-	public function mUp(e:MouseEvent):Void {
-		touch_end(0, TouchEvent.TOUCH_END, e.stageX, e.stageY, e.localX, e.localY);
-	}
+	function mDown(e:MouseEvent):Void { touch_begin(0, TouchEvent.TOUCH_BEGIN, e.stageX, e.stageY); }
+	function mMove(e:TouchEvent):Void { touch_move(0, e.stageX, e.stageY); }
+	function mUp(e:MouseEvent):Void { touch_end(0, TouchEvent.TOUCH_END, e.stageX, e.stageY); }
 	
-	public function tBegin(e:TouchEvent):Void {
-		touch_begin(e.touchPointID, TouchEvent.TOUCH_BEGIN, e.stageX, e.stageY, e.localX, e.localY);
-	}
-	public function tEnd(e:TouchEvent):Void {
-		touch_end(e.touchPointID, TouchEvent.TOUCH_END, e.stageX, e.stageY, e.localX, e.localY);
-	}
+	function tBegin(e:TouchEvent):Void { touch_begin(e.touchPointID, TouchEvent.TOUCH_BEGIN, e.stageX, e.stageY); }
+	function tMove(e:TouchEvent):Void { touch_move(e.touchPointID, e.stageX, e.stageY); }
+	function tEnd(e:TouchEvent):Void { touch_end(e.touchPointID, TouchEvent.TOUCH_END, e.stageX, e.stageY); }
 	
 	function checkTouchArray(size:Int):Void {
-		while (touches.length <= size){ touches.push(new InputTouch()); }
+		while (touches.length <= size){ touches.push(new InputTouch(touches.length)); }
 	}
 	
-	private function touch_end(id:Int, state:String, x:Float, y:Float, lx:Float, ly:Float):Void {
+	function touch_move(id:Int, x:Float, y:Float):Void {
 		checkTouchArray(id);
-		touches[id].update(state, Math.floor(x), Math.floor(y), Math.floor(lx), Math.floor(ly));
-		if(tEnd_cb != null)	tEnd_cb(touches[id]);
+		if (touches[id].move(Math.floor(x), Math.floor(y))) {
+			if(tMove_cb != null)	for(i in 0...tMove_cb.length) tMove_cb[i](touches[id]);
+		}
+		
 	}
 	
-  private function touch_begin(id:Int, state:String, x:Float, y:Float, lx:Float, ly:Float):Void {
+	function touch_end(id:Int, state:String, x:Float, y:Float):Void {
+		checkTouchArray(id);
+		touches[id].update(state, Math.floor(x), Math.floor(y));
+		if(tEnd_cb != null)	for(i in 0...tEnd_cb.length) tEnd_cb[i](touches[id]);
+	}
+	
+  function touch_begin(id:Int, state:String, x:Float, y:Float):Void {
 		checkTouchArray(id);
 		//Console.log("InputTouchManager", "touch begin. ID : " + e.touchPointID);
-		touches[id].update(state, Math.floor(x), Math.floor(y), Math.floor(lx), Math.floor(ly));
-		if(tBegin_cb != null)	tBegin_cb(touches[id]);
+		touches[id].update(state, Math.floor(x), Math.floor(y));
+		if(tBegin_cb != null)	for(i in 0...tBegin_cb.length) tBegin_cb[i](touches[id]);
   }
   
 }
