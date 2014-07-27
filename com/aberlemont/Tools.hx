@@ -1,6 +1,7 @@
 package com.aberlemont;
 import flash.utils.CompressionAlgorithm;
 import openfl.geom.Point;
+import openfl.geom.Rectangle;
 import openfl.text.TextField;
 
 /**
@@ -65,6 +66,9 @@ class Tools
 			if (pta.y == ptb.y)	return true;
 		}
 		return false;
+	}
+	static public function compareRect(ra:Rectangle, rb:Rectangle):Bool {
+		return (ra.x == rb.x && ra.y == rb.y && ra.width == rb.width && rb.height == ra.height);
 	}
 	
 	static public function distance(xa:Float, ya:Float, xb:Float, yb:Float):Float {
