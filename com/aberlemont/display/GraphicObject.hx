@@ -76,6 +76,11 @@ class GraphicObject extends Sprite
     return this;
   }
   
+	public function pivotInCenter():Void {
+		canvas.x = Math.floor(-width * 0.5);
+		canvas.y = Math.floor(-height * 0.5);
+	}
+	
 	public function setFrame(row:Int, col:Int):Void {
 		rect.x = col * rect.width;
 		rect.y = row * rect.height;
