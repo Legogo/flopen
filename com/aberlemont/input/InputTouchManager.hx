@@ -18,7 +18,6 @@ import openfl.Lib;
  */
 class InputTouchManager
 {
-	static public var manager:InputTouchManager;
 	var touches:Array<InputTouch> = new Array<InputTouch>();
 	var multiTouchSupported:Bool = false;
 	
@@ -78,4 +77,9 @@ class InputTouchManager
 		if(tBegin_cb != null)	for(i in 0...tBegin_cb.length) tBegin_cb[i](touches[id]);
   }
   
+  static private var manager:InputTouchManager;
+  static public function get():InputTouchManager {
+    if (manager == null) new InputTouchManager();
+    return manager;
+  }
 }

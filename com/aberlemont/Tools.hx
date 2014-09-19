@@ -1,4 +1,5 @@
 package com.aberlemont;
+import flash.geom.Matrix3D;
 import flash.utils.CompressionAlgorithm;
 import openfl.geom.Point;
 import openfl.geom.Rectangle;
@@ -44,8 +45,26 @@ class Tools
   static public function rangeInt(x:Int, y:Int):Int {
     return Math.floor(range(cast(x, Int), cast(y, Int)));
   }
+  
+  static public function roundTo(val:Float, dec:Int):Float {
+    var temp:Float = Math.ffloor(val * dec);
+    return temp / dec;
+  }
+  
+  static public function moveTowardFloat(current:Float, target:Float, step:Float):Float {
+    var dir:Float = sign(target - current);
+    if (dir == 0)  return target;
+    if (dir > 0) {
+      current += step;
+      if (current < target)  return current;
+    }else if (dir < 0) {
+      current -= step;
+      if (current > target)  return current;
+    }
+    return target;
+  }
 	
-	static public function moveToward(current:Point, target:Point, step:Float):Point {
+	static public function moveTowardPoint(current:Point, target:Point, step:Float):Point {
 		//var diff:Point = new Point(target.x - current.x, target.y - current.y);
 		pt.x = target.x - current.x;
 		pt.y = target.y - current.y;
@@ -93,7 +112,11 @@ class Tools
 		pta.y -= ptb.y;
 		return pta;
 	}
-	
+  
+  static public function clamp01(val:Float):Float { if (val < 0)  return 0; if(val > 1) return 1; return val; }
+  static public function lerp(a:Float,b:Float,amount:Float):Float { return a + amount * (b-a); }
+	static public function inverselerp(a:Float, b:Float, amount:Float):Float { return (amount - a) / (b - a); }
+  
 	static public function destinationPoint(origin:Point, dir:Point, lenght:Float):Point {
 		return new Point((origin.x + dir.x * lenght), (origin.y + dir.y * lenght));
 	}
