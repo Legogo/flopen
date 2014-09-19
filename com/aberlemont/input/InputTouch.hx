@@ -22,6 +22,8 @@ class InputTouch
 	public var moveGap:Point = new Point(); // diff btw start and end
 	public var moveDelta:Point = new Point(); // diff at each frame
 	
+  var isMouse:Bool = true;
+  
 	public var moved:Bool = false; // to know if touch went through move phase
 	
 	var thresholdLimit:Int = 2;
@@ -49,13 +51,14 @@ class InputTouch
 	
 	public function hasMovedEnought():Bool { return movedThreshold <= 0; }
 	
-	public function update(state:String, x:Int, y:Int):InputTouch {
+	public function update(mouse:Bool, state:String, x:Int, y:Int):InputTouch {
 		this.state = state;
 		this.x = x;
 		this.y = y;
 		moveGap.x = x;
 		moveGap.y = y;
-		
+		isMouse = mouse;
+    
 		//reset
 		
 		if (state == TouchEvent.TOUCH_BEGIN) {
@@ -67,7 +70,7 @@ class InputTouch
 		return this;
 	}
 	public function toString():String {
-		var c:String = "[TOUCH][" + id + "]";
+		var c:String = "["+((isMouse) ? "MOUSE" : "TOUCH")+")][" + id + "]";
 		if (state == TouchEvent.TOUCH_MOVE)	c += "\ndelta:" + moveDelta + " gap:" + moveGap;
 		c += "\n" + x + "," + y;
 		return c;

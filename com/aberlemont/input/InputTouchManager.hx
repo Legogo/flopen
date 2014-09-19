@@ -45,19 +45,19 @@ class InputTouchManager
 		
   }
   
-	function tBegin(e:TouchEvent):Void { trace(e.toString()); touch_begin(e.touchPointID, TouchEvent.TOUCH_BEGIN, e.stageX, e.stageY); }
-	function tMove(e:TouchEvent):Void { touch_move(e.touchPointID, e.stageX, e.stageY); }
-	function tEnd(e:TouchEvent):Void { touch_end(e.touchPointID, TouchEvent.TOUCH_END, e.stageX, e.stageY); }
+	function tBegin(e:TouchEvent):Void { trace(e.touchPointID + "," + e.stageX + "," + e.stageY); touch_begin(false, e.touchPointID, TouchEvent.TOUCH_BEGIN, e.stageX, e.stageY); }
+	function tMove(e:TouchEvent):Void { touch_move(false, e.touchPointID, e.stageX, e.stageY); }
+	function tEnd(e:TouchEvent):Void { touch_end(false, e.touchPointID, TouchEvent.TOUCH_END, e.stageX, e.stageY); }
 	
-	function mDown(e:MouseEvent):Void { touch_begin(0, TouchEvent.TOUCH_BEGIN, e.stageX, e.stageY); }
-	function mMove(e:MouseEvent):Void { touch_move(0, e.stageX, e.stageY); }
-	function mUp(e:MouseEvent):Void { touch_end(0, TouchEvent.TOUCH_END, e.stageX, e.stageY); }
+	function mDown(e:MouseEvent):Void { touch_begin(true, 0, TouchEvent.TOUCH_BEGIN, e.stageX, e.stageY); }
+	function mMove(e:MouseEvent):Void { touch_move(true, 0, e.stageX, e.stageY); }
+	function mUp(e:MouseEvent):Void { touch_end(true, 0, TouchEvent.TOUCH_END, e.stageX, e.stageY); }
 	
 	function checkTouchArray(size:Int):Void {
 		while (touches.length <= size){ touches.push(new InputTouch(touches.length)); }
 	}
 	
-	function touch_move(id:Int, x:Float, y:Float):Void {
+	function touch_move(mouse:Bool, id:Int, x:Float, y:Float):Void {
 		checkTouchArray(id);
 		if (touches[id].move(Math.floor(x), Math.floor(y))) {
 			if(tMove_cb != null)	for(i in 0...tMove_cb.length) tMove_cb[i](touches[id]);
@@ -65,16 +65,16 @@ class InputTouchManager
 		
 	}
 	
-	function touch_end(id:Int, state:String, x:Float, y:Float):Void {
+	function touch_end(mouse:Bool, id:Int, state:String, x:Float, y:Float):Void {
 		checkTouchArray(id);
-		touches[id].update(state, Math.floor(x), Math.floor(y));
+		touches[id].update(mouse, state, Math.floor(x), Math.floor(y));
 		if(tEnd_cb != null)	for(i in 0...tEnd_cb.length) tEnd_cb[i](touches[id]);
 	}
 	
-  function touch_begin(id:Int, state:String, x:Float, y:Float):Void {
+  function touch_begin(mouse:Bool, id:Int, state:String, x:Float, y:Float):Void {
 		checkTouchArray(id);
 		//Console.log("InputTouchManager", "touch begin. ID : " + e.touchPointID);
-		touches[id].update(state, Math.floor(x), Math.floor(y));
+		touches[id].update(mouse, state, Math.floor(x), Math.floor(y));
 		if(tBegin_cb != null)	for(i in 0...tBegin_cb.length) tBegin_cb[i](touches[id]);
   }
   
