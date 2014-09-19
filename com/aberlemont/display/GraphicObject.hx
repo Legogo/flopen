@@ -13,7 +13,7 @@ import openfl.text.TextField;
  */
 class GraphicObject extends Sprite
 {
-  var anim:GraphicAnim;
+  public var anim:GraphicAnim;
 	
 	var sheet:BitmapData;
   var canvas:Bitmap;
@@ -84,12 +84,12 @@ class GraphicObject extends Sprite
 		canvas.y = Math.floor(-height * 0.5);
 	}
 	
-	public function setFrame(row:Int, col:Int):Void {
+	public function setFrame(row:Int, col:Int):GraphicObject{
 		draw_rect.x = col * draw_rect.width;
 		draw_rect.y = row * draw_rect.height;
 		frameTime = frameTimeSpeed;
-		
 		draw();
+    return this;
 	}
 	
 	public function getRow():Int { return Math.floor(draw_rect.y / draw_rect.height); }
@@ -99,27 +99,12 @@ class GraphicObject extends Sprite
 		canvas.bitmapData.copyPixels(sheet, draw_rect, draw_pt, sheet, draw_pt);
 	}
 	
-	public function getSheet():BitmapData {
-		return sheet;
-	}
-	public function getSymbol():BitmapData {
-		return canvas.bitmapData.clone();
-	}
-	
-	public function getTopLeft():Point {
-		return new Point(x - (getWidth() * 0.5), y - (getHeight() * 0.5));
-	}
-	
-	public function getBbox():Rectangle {
-		return bbox;
-	}
-	public function getWidth():Int {
-		return Math.floor(canvas.width);
-	}
-	public function getHeight():Int {
-		return Math.floor(canvas.height);
-	}
-	
+	public function getSheet():BitmapData { return sheet; }
+	public function getSymbol():BitmapData { return canvas.bitmapData.clone(); }
+	public function getTopLeft():Point { return new Point(x - (getWidth() * 0.5), y - (getHeight() * 0.5)); }
+	public function getBbox():Rectangle { return bbox; }
+	public function getWidth():Int { return Math.floor(canvas.width); }
+	public function getHeight():Int { return Math.floor(canvas.height); }
 	public function toStringDebug():String { return name; }
 	
 	public function getPosition():Point { position.x = x; position.y = y; return position; }

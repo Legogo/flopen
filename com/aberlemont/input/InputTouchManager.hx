@@ -12,6 +12,9 @@ import openfl.Lib;
 /**
  * ...
  * @author A.Berlemont
+ * 
+ * tBeing, tEnd and tMove are arrays of callbacks !
+ * To use that manager you just add your function(InputTouch):Void to these arrays
  */
 class InputTouchManager
 {
