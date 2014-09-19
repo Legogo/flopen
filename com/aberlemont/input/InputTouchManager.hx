@@ -47,7 +47,10 @@ class InputTouchManager
   
 	function tBegin(e:TouchEvent):Void { touch_begin(false, e.touchPointID, TouchEvent.TOUCH_BEGIN, e.stageX, e.stageY); }
 	function tMove(e:TouchEvent):Void { touch_move(false, e.touchPointID, e.stageX, e.stageY); }
-	function tEnd(e:TouchEvent):Void { touch_end(false, e.touchPointID, TouchEvent.TOUCH_END, e.stageX, e.stageY); }
+	function tEnd(e:TouchEvent):Void {
+    if (e == null) { Console.log("InputTouchManager", "warning :: TOUCH_END :: event is null"); return; }
+    touch_end(false, e.touchPointID, TouchEvent.TOUCH_END, e.stageX, e.stageY);
+  }
 	
 	function mDown(e:MouseEvent):Void { touch_begin(true, 0, TouchEvent.TOUCH_BEGIN, e.stageX, e.stageY); }
 	function mMove(e:MouseEvent):Void { touch_move(true, 0, e.stageX, e.stageY); }
