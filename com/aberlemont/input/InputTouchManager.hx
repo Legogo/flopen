@@ -44,13 +44,13 @@ class InputTouchManager
 		
   }
   
-	function mDown(e:MouseEvent):Void { touch_begin(0, TouchEvent.TOUCH_BEGIN, e.stageX, e.stageY); }
-	function mMove(e:TouchEvent):Void { touch_move(0, e.stageX, e.stageY); }
-	function mUp(e:MouseEvent):Void { touch_end(0, TouchEvent.TOUCH_END, e.stageX, e.stageY); }
-	
 	function tBegin(e:TouchEvent):Void { touch_begin(e.touchPointID, TouchEvent.TOUCH_BEGIN, e.stageX, e.stageY); }
 	function tMove(e:TouchEvent):Void { touch_move(e.touchPointID, e.stageX, e.stageY); }
 	function tEnd(e:TouchEvent):Void { touch_end(e.touchPointID, TouchEvent.TOUCH_END, e.stageX, e.stageY); }
+	
+	function mDown(e:MouseEvent):Void { touch_begin(0, TouchEvent.TOUCH_BEGIN, e.stageX, e.stageY); }
+	function mMove(e:MouseEvent):Void { touch_move(0, e.stageX, e.stageY); }
+	function mUp(e:MouseEvent):Void { touch_end(0, TouchEvent.TOUCH_END, e.stageX, e.stageY); }
 	
 	function checkTouchArray(size:Int):Void {
 		while (touches.length <= size){ touches.push(new InputTouch(touches.length)); }

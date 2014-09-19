@@ -1,9 +1,9 @@
 package com.aberlemont;
 import flash.geom.Matrix3D;
 import flash.utils.CompressionAlgorithm;
-import openfl.geom.Point;
-import openfl.geom.Rectangle;
-import openfl.text.TextField;
+import flash.geom.Point;
+import flash.geom.Rectangle;
+import flash.text.TextField;
 
 /**
  * ...

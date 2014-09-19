@@ -1,10 +1,10 @@
 package com.aberlemont.display;
 
-import openfl.display.BitmapData;
-import openfl.display.Sprite;
-import openfl.display.Bitmap;
-import openfl.geom.Point;
-import openfl.geom.Rectangle;
+import flash.display.BitmapData;
+import flash.display.Sprite;
+import flash.display.Bitmap;
+import flash.geom.Point;
+import flash.geom.Rectangle;
 import openfl.text.TextField;
 
 /**

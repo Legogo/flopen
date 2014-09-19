@@ -2,8 +2,8 @@ package com.aberlemont.display;
 
 import com.aberlemont.system.GameTime;
 import flash.display.BitmapData;
-import openfl.geom.Point;
-import openfl.geom.Rectangle;
+import flash.geom.Point;
+import flash.geom.Rectangle;
 
 /**
  * ...

@@ -1,10 +1,10 @@
 package com.aberlemont.display;
 
 import flash.display.BitmapData;
-import openfl.geom.Point;
-import openfl.geom.Rectangle;
+import flash.display.Bitmap;
+import flash.geom.Point;
+import flash.geom.Rectangle;
 import openfl.Lib;
-import openfl.display.Bitmap;
 import openfl.Assets;
 
 /**
@@ -40,7 +40,7 @@ class GraphicTools
 	}
 	
 	/* return rectangles of given color in a bitmap (original bitmapdata is override with debug color) */
-	static public function solveShapesBbox(shape:BitmapData, seekColor:Int):Array<Rectangle> {
+	static public function solveShapesBbox(shape:BitmapData, seekColor:UInt):Array<Rectangle> {
 		var rect:Rectangle = null;
 		var rs:Array<Rectangle> = new Array<Rectangle>();
 		
