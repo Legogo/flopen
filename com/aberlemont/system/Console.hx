@@ -83,6 +83,8 @@ class Console extends Sprite
       addEventListener(Event.ENTER_FRAME, update_activity);
     }
     
+    Lib.current.addChild(this);
+    
 		for (i in 0...cb_onOpen.length) {
 			cb_onOpen[i]();
 		}
