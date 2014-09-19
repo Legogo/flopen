@@ -32,11 +32,12 @@ class InputTouchManager
 		multiTouchSupported = Multitouch.supportsTouchEvents;
     if (multiTouchSupported){
       Multitouch.inputMode = MultitouchInputMode.TOUCH_POINT;
+      Console.log("InputManager", "multitouch supported, using TOUCH_ events");
       Lib.current.addEventListener(TouchEvent.TOUCH_BEGIN, tBegin);
 			Lib.current.addEventListener(TouchEvent.TOUCH_MOVE, tMove);
       Lib.current.addEventListener(TouchEvent.TOUCH_END, tEnd);
     }else {
-			Console.log("InputManager", "multitouch not supported, using mouse event instead");
+			Console.log("InputManager", "multitouch not supported, using MOUSE_ events instead");
       Lib.current.addEventListener(MouseEvent.MOUSE_DOWN, mDown);
 			Lib.current.addEventListener(MouseEvent.MOUSE_MOVE, mMove);
       Lib.current.addEventListener(MouseEvent.MOUSE_UP, mUp);
@@ -44,7 +45,7 @@ class InputTouchManager
 		
   }
   
-	function tBegin(e:TouchEvent):Void { touch_begin(e.touchPointID, TouchEvent.TOUCH_BEGIN, e.stageX, e.stageY); }
+	function tBegin(e:TouchEvent):Void { trace(e.toString()); touch_begin(e.touchPointID, TouchEvent.TOUCH_BEGIN, e.stageX, e.stageY); }
 	function tMove(e:TouchEvent):Void { touch_move(e.touchPointID, e.stageX, e.stageY); }
 	function tEnd(e:TouchEvent):Void { touch_end(e.touchPointID, TouchEvent.TOUCH_END, e.stageX, e.stageY); }
 	
