@@ -8,6 +8,17 @@ import flash.display.Sprite;
  */
 class AppTools
 {
+  
+  static public function bottom(app:Sprite):Void {
+    var w:Int = Math.floor(app.width);
+    var h:Int = Math.floor(app.height);
+    var fw:Int = GraphicTools.getStageWidth();
+    var fh:Int = GraphicTools.getStageHeight();
+    app.x = (fw - w) * 0.5;
+    app.y = fh - h;
+    //trace(w, h, fw, fh, app.x, app.y);
+  }
+  
   static public function center(app:Sprite):Void {
     var w:Int = Math.floor(app.width);
     var h:Int = Math.floor(app.height);
