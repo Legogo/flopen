@@ -58,7 +58,7 @@ class InputTouchManager
 	
   function getTouch(idx:Int):InputTouch {
     for (i in 0...touches.length) {
-      if (touches[i].id == idx)  return touches[idx];
+      if (touches[i].id == idx)  return touches[i];
     }
     var t:InputTouch = new InputTouch(idx);
     touches.push(t);
