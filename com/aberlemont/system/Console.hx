@@ -66,8 +66,9 @@ class Console extends Sprite
     }
   }
   
-  private function toggle():Void {
+  public function toggle():Void {
     visible = !visible;
+    log("Console", "is visible ? "+visible);
     if (!visible) return;
     
 		for (i in 0...cb_onOpen.length) {
