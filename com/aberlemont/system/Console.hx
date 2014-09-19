@@ -1,6 +1,7 @@
 package com.aberlemont.system;
 
 import com.aberlemont.display.GraphicTools;
+import com.aberlemont.Tools;
 import openfl.display.Sprite;
 import openfl.events.Event;
 import openfl.Lib;
@@ -19,6 +20,7 @@ class Console extends Sprite
   static public var console:Console;
   private var tf_system:TextField;
   private var tf_console:TextField;
+  private var tf_activity:TextField;
   
   private var lines:Array<String> = new Array<String>();
   private var fps:FPS;
@@ -30,11 +32,16 @@ class Console extends Sprite
     super();
     console = this;
 		
-    tf_system = new TextField();
-    tf_console = new TextField();
+    tf_system = Tools.getStandardTextfield();
+    tf_console = Tools.getStandardTextfield();
+    tf_activity = Tools.getStandardTextfield();
+    
+    tf_activity.x = 10;
+    tf_activity.y = 10;
     
     setupTextfield(tf_system);
     setupTextfield(tf_console);
+    setupTextfield(tf_activity);
     
     fps = new FPS();
     addChild(fps);
@@ -69,7 +76,12 @@ class Console extends Sprite
   public function toggle():Void {
     visible = !visible;
     log("Console", "is visible ? "+visible);
-    if (!visible) return;
+    if (!visible) {
+      removeEventListener(Event.ENTER_FRAME, update_activity);
+      return;
+    }else {
+      addEventListener(Event.ENTER_FRAME, update_activity);
+    }
     
 		for (i in 0...cb_onOpen.length) {
 			cb_onOpen[i]();
@@ -106,7 +118,11 @@ class Console extends Sprite
     graphics.endFill();
     
 		updateText();
-		//addEventListener(Event.ENTER_FRAME, updateText);
+  }
+  
+  function update_activity(e:Event):Void {
+    tf_activity.text += ".";
+    if (tf_activity.text.length > fps.currentFPS) tf_activity.text = "";
   }
   
   private function updateText():Void {
