@@ -34,12 +34,12 @@ class InputTouchManager
       Multitouch.inputMode = MultitouchInputMode.TOUCH_POINT;
       Console.log("InputManager", "multitouch supported, using TOUCH_ events");
       Lib.current.addEventListener(TouchEvent.TOUCH_BEGIN, tBegin);
-			Lib.current.addEventListener(TouchEvent.TOUCH_MOVE, tMove);
+			//Lib.current.addEventListener(TouchEvent.TOUCH_MOVE, tMove);
       Lib.current.addEventListener(TouchEvent.TOUCH_END, tEnd);
     }else {
 			Console.log("InputManager", "multitouch not supported, using MOUSE_ events instead");
       Lib.current.addEventListener(MouseEvent.MOUSE_DOWN, mDown);
-			Lib.current.addEventListener(MouseEvent.MOUSE_MOVE, mMove);
+			//Lib.current.addEventListener(MouseEvent.MOUSE_MOVE, mMove);
       Lib.current.addEventListener(MouseEvent.MOUSE_UP, mUp);
     }
 		
@@ -53,42 +53,29 @@ class InputTouchManager
 	function mMove(e:MouseEvent):Void { touch_move(true, 0, e.stageX, e.stageY); }
 	function mUp(e:MouseEvent):Void { touch_end(true, 0, TouchEvent.TOUCH_END, e.stageX, e.stageY); }
 	
-  /* add all missing InputTouch struct missing to store information */
-	function checkTouchArray(size:Int):Void {
-    //if (size == 0) return;
-		while (touches.length <= size) { 
-      var idx:Int = touches.length;
-      touches.push(new InputTouch(idx));
-    }
-    //if (safe <= 0) Console.log("InputTouchManager", "checkTouchArray :: error :: while safed");
-	}
-  
   function getTouch(idx:Int):InputTouch {
     for (i in 0...touches.length) {
       if (touches[i].id == idx)  return touches[idx];
     }
-    Console.log("InputTouchManager", "error :: should have found touch of id " + idx);
-    return null;
+    var t:InputTouch = new InputTouch(idx);
+    touches.push(t);
+    return t;
   }
 	
 	function touch_move(mouse:Bool, id:Int, x:Float, y:Float):Void {
-		checkTouchArray(id);
     var touch:InputTouch = getTouch(id);
 		if (touch.move(Math.floor(x), Math.floor(y))) {
 			if(tMove_cb != null)	for(i in 0...tMove_cb.length) tMove_cb[i](touch);
 		}
-		
 	}
 	
 	function touch_end(mouse:Bool, id:Int, state:String, x:Float, y:Float):Void {
-		checkTouchArray(id);
     var touch:InputTouch = getTouch(id);
 		touch.update(mouse, state, Math.floor(x), Math.floor(y));
 		if(tEnd_cb != null)	for(i in 0...tEnd_cb.length) tEnd_cb[i](touch);
 	}
 	
   function touch_begin(mouse:Bool, id:Int, state:String, x:Float, y:Float):Void {
-		checkTouchArray(id);
     var touch:InputTouch = getTouch(id);
 		touch.update(mouse, state, Math.floor(x), Math.floor(y));
 		if(tBegin_cb != null)	for(i in 0...tBegin_cb.length) tBegin_cb[i](touch);
