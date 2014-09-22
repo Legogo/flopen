@@ -75,7 +75,8 @@ class Console extends Sprite
   
   public function toggle():Void {
     visible = !visible;
-    log("Console", "is visible ? "+visible);
+    log("Console", "is visible ? " + visible);
+    
     if (!visible) {
       removeEventListener(Event.ENTER_FRAME, update_activity);
       return;
@@ -92,8 +93,8 @@ class Console extends Sprite
 		//on top
 		if(stage != null) Lib.current.addChild(this);
 		
-    var w:Int = Math.floor(Lib.current.stage.stageWidth);
-    var h:Int = Math.floor(Lib.current.stage.stageHeight);
+    var w:Int = Math.floor(AppTools.getStageWidth());
+    var h:Int = Math.floor(AppTools.getStageHeight());
     w -= 30;
     h -= 20;
     
@@ -113,7 +114,7 @@ class Console extends Sprite
     }
     
     graphics.clear();
-    graphics.beginFill(0xFFFFFF, 0.8);
+    graphics.beginFill(0xFFFFFF, 0.9);
     //graphics.drawRect(0,0, width, height);
     graphics.drawRect(tf_console.x, tf_console.y, tf_console.width, tf_console.height);
     graphics.drawRect(tf_system.x, tf_system.y, tf_system.width, tf_system.height); 

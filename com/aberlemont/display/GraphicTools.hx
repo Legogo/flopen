@@ -1,5 +1,6 @@
 package com.aberlemont.display;
 
+import com.aberlemont.system.AppTools;
 import flash.display.BitmapData;
 import flash.display.Bitmap;
 import flash.geom.Point;
@@ -14,9 +15,6 @@ import openfl.Assets;
 class GraphicTools
 {
 
-  static public function getStageWidth():Int { return Lib.current.stage.stageWidth; }
-  static public function getStageHeight():Int { return Lib.current.stage.stageHeight; }
-  
 	static public function getAsset(path:String):Bitmap {
 		return new Bitmap(Assets.getBitmapData("assets/"+path));
 	}
@@ -30,7 +28,7 @@ class GraphicTools
 	}
 	
   static public function display_stageInfo():Void {
-    trace("stage " + getStageWidth() + ", " + getStageHeight());
+    trace("stage " + AppTools.getStageWidth() + ", " + AppTools.getStageHeight());
   }
 	
 	static public function getImageFromSheet(sheet:BitmapData, size:Rectangle, pos:Point):BitmapData {
