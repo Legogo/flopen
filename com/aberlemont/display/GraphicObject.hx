@@ -40,7 +40,7 @@ class GraphicObject extends Sprite
     super();
 		
 		if (path.length > 0) {
-			sheet = GraphicTools.getAssetPngData(path);
+			sheet = GraphicTools.getAssetData(path);
 			if (sheet == null) {
 				trace("GraphicObject :: no sheet found for path : " + path);
 				return;

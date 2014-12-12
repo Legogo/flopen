@@ -18,6 +18,9 @@ class GraphicTools
 	static public function getAsset(path:String):Bitmap {
 		return new Bitmap(Assets.getBitmapData("assets/"+path));
 	}
+	static public function getAssetData(path:String):BitmapData {
+		return Assets.getBitmapData("assets/"+path);
+	}
 	
   static public function getAssetPng(path:String):Bitmap
   {
